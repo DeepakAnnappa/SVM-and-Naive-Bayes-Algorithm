@@ -1,0 +1,16 @@
+diabetes <- read.csv("E:/project/diabetes.csv")
+View(diabetes)
+str(diabetes)
+library(dplyr)
+installed.packages("ggplot2")
+diabetes$Outcome<-factor(diabetes$Outcome,labels = c("tested_pos","tested_neg"))
+library(e1071)
+mymodel<- svm(Outcome~., data = diabetes)
+summary(mymodel)
+
+pred<- predict(mymodel, diabetes)
+tab<-table(Predicted = pred, Actual = diabetes$Outcome)
+tab
+sum(diag(tab))/sum(tab)
+mymodel<- svm(Outcome~., data = diabetes, kernel = "linear")
+mymodel<- svm(Outcome~., data = diabetes, kernel = "polynomial")
